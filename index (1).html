@@ -1,0 +1,621 @@
+<title>Road to End of 2026 Chapter (Semester 1)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;600;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one reading column under a flag-stripe rule; asymmetric post rows (date left, text right); documents (CV, letter, email) are the boxed sheets. */
+  :root {
+    --bg: #0B131A;
+    --surface: #121D26;
+    --fg: #E8F0F6;
+    --muted: #9DB0C0;
+    --line: #223441;
+    --accent: #86BFEC;
+    --accent-soft: #14283A;
+    --sky: #75AADB;
+    /* Background glow colours: change these four to play with the look */
+    --glow-1: #3C7DD9;
+    --glow-2: #19B3A6;
+    --glow-3: #7B4FE0;
+    --glow-4: #D9488B;
+    color-scheme: dark;
+    --flag-white: #FFFFFF;
+    --flag-black: #000000;
+    --font-display: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  /* Moving background: four soft colour glows that drift and fade in and out behind the page */
+  .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .aurora i { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; opacity: .3; will-change: transform, opacity; }
+  .aurora i:nth-child(1) { left: -20vmax; top: -20vmax; background: radial-gradient(circle, var(--glow-1), transparent 65%); animation: drift-a 28s ease-in-out infinite alternate, glow 14s ease-in-out infinite alternate; }
+  .aurora i:nth-child(2) { right: -25vmax; top: 10vh; background: radial-gradient(circle, var(--glow-2), transparent 65%); animation: drift-b 34s ease-in-out infinite alternate, glow 18s ease-in-out infinite alternate-reverse; }
+  .aurora i:nth-child(3) { left: 10vw; bottom: -30vmax; background: radial-gradient(circle, var(--glow-3), transparent 65%); animation: drift-c 40s ease-in-out infinite alternate, glow 22s ease-in-out infinite alternate; }
+  .aurora i:nth-child(4) { right: -10vmax; bottom: -20vmax; background: radial-gradient(circle, var(--glow-4), transparent 65%); animation: drift-d 31s ease-in-out infinite alternate, glow 26s ease-in-out infinite alternate-reverse; }
+  @keyframes drift-a { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(35vw, 25vh, 0) scale(1.25); } }
+  @keyframes drift-b { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-40vw, 30vh, 0) scale(1.15); } }
+  @keyframes drift-c { from { transform: translate3d(0, 0, 0) scale(1.1); } to { transform: translate3d(30vw, -35vh, 0) scale(.9); } }
+  @keyframes drift-d { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-30vw, -25vh, 0) scale(1.3); } }
+  @keyframes glow { from { opacity: .16; } to { opacity: .42; } }
+  @media (prefers-reduced-motion: reduce) {
+    .aurora i { animation: none; opacity: .28; }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 58rem;
+    margin-inline: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 1.25rem 3rem;
+  }
+
+  /* Placeholders the owner still has to fill in */
+  .fill {
+    background: var(--accent-soft);
+    border-bottom: 2px dashed var(--accent);
+    padding: 0 .25em;
+    font-style: normal;
+  }
+  .prompt {
+    background: var(--accent-soft);
+    border: 1px dashed var(--accent);
+    border-radius: 4px;
+    padding: .7rem .9rem;
+    margin: .6rem 0 0;
+    max-width: 40rem;
+  }
+
+  /* Header */
+  .masthead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem 1.5rem; }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .byline { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .04em; color: var(--muted); }
+  .flag {
+    height: 12px;
+    margin-block: .85rem .25rem;
+    background: linear-gradient(to bottom,
+      var(--sky) 0 3px, var(--flag-white) 3px 4px,
+      var(--flag-black) 4px 8px,
+      var(--flag-white) 8px 9px, var(--sky) 9px 12px);
+  }
+  .nav { display: flex; flex-wrap: wrap; gap: 0 1.25rem; margin-top: .25rem; }
+  .nav a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: .93rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: .6rem 0 .45rem;
+    border-bottom: 3px solid transparent;
+  }
+  .nav a:hover { color: var(--fg); }
+  .nav a[aria-current="page"] { color: var(--fg); border-bottom-color: var(--accent); }
+
+  /* Headings and text */
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.02em; line-height: 1.1; }
+  .eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 .75rem; }
+  .hero { padding-block: 2.5rem 1.5rem; }
+  .hero h1 { font-weight: 800; font-size: clamp(2.1rem, 7vw, 3.75rem); max-width: 16ch; }
+  .hero p.lead { font-size: 1.2rem; max-width: 36rem; margin: 1.25rem 0 0; }
+  .view h2.page-title { font-weight: 800; font-size: clamp(1.8rem, 5vw, 2.6rem); margin-top: 2rem; }
+  .intro { max-width: 38rem; margin: 1rem 0 0; color: var(--muted); }
+  .section-label {
+    font-family: var(--font-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); margin: 2.5rem 0 .5rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line);
+  }
+  p { margin: 0 0 1rem; }
+  .measure { max-width: 40rem; }
+
+  /* Posts */
+  .post { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: .5rem 2rem; padding-block: 1.75rem; border-bottom: 1px solid var(--line); }
+  .post time { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); padding-top: .45rem; }
+  .post h3 { font-weight: 600; font-size: 1.5rem; }
+  .post p { margin: .75rem 0 0; max-width: 40rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .85rem; }
+  .tag, .chip {
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
+    border: 1px solid var(--line); border-radius: 3px; padding: .15rem .45rem; color: var(--muted); white-space: nowrap;
+  }
+  .chip.live { border-color: var(--accent); color: var(--accent); }
+
+  /* Facts list */
+  .facts { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: .6rem 2rem; margin: 0; }
+  .facts dt { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: .35rem; }
+  .facts dd { margin: 0; }
+
+  /* Courses and outcomes */
+  .course { padding-block: 1.25rem; border-bottom: 1px solid var(--line); }
+  .course h3 { font-weight: 600; font-size: 1.35rem; }
+  .course p { margin: .5rem 0 0; max-width: 40rem; }
+  .lo { list-style: none; margin: .9rem 0 0; padding: 0; counter-reset: lo; display: grid; gap: .6rem; max-width: 40rem; }
+  .lo li { counter-increment: lo; display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: .75rem; }
+  .lo li::before { content: "LO" counter(lo); font-family: var(--font-mono); font-size: .8rem; color: var(--accent); padding-top: .2rem; }
+
+  /* Reflections */
+  .stage { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: .25rem 2rem; padding-block: 1.25rem; border-bottom: 1px solid var(--line); }
+  .stage h3 { font-weight: 600; font-size: 1.2rem; }
+  .stage .def { color: var(--muted); margin: 0; max-width: 40rem; }
+  .stage .def + .prompt { margin-top: .6rem; }
+  .wordcount { display: inline-block; margin-top: .75rem; }
+
+  /* Skills */
+  .skill { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .25rem 1rem; padding-block: 1rem; border-bottom: 1px solid var(--line); }
+  .skill h3 { font-weight: 600; font-size: 1.15rem; }
+  .skill p { grid-column: 1 / -1; margin: 0; color: var(--muted); max-width: 40rem; }
+  .skill p.prompt { color: var(--fg); margin-top: .5rem; }
+  .skill .chip { align-self: start; margin-top: .2rem; }
+
+  /* Documents: CV, letter, email */
+  .doc-tools { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem; margin: 1.25rem 0 1rem; }
+  button.copy {
+    font-family: var(--font-display); font-weight: 600; font-size: .95rem;
+    background: var(--accent); color: var(--bg); border: 0; border-radius: 4px; padding: .6rem 1rem; cursor: pointer;
+  }
+  .copy-msg { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); }
+  .sheet { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: clamp(1.1rem, 4vw, 2.5rem); }
+  .sheet h2 { font-weight: 800; font-size: clamp(1.7rem, 5vw, 2.3rem); }
+  .sheet .contact { font-family: var(--font-mono); font-size: .82rem; color: var(--muted); margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; }
+  .sheet h3 { font-family: var(--font-mono); font-weight: 500; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 1.75rem 0 .6rem; padding-bottom: .4rem; border-bottom: 1px solid var(--line); }
+  .entry { margin: 0 0 1rem; }
+  .entry .head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; font-family: var(--font-display); font-weight: 600; }
+  .entry .head span:last-child { font-family: var(--font-mono); font-weight: 400; font-size: .8rem; color: var(--muted); }
+  .entry p { margin: .2rem 0 0; color: var(--muted); }
+  .sheet ul { margin: 0; padding-left: 1.2rem; }
+  .sheet li { margin-bottom: .25rem; }
+  .letter p, .mail p { max-width: 38rem; }
+  .letter .block { margin: 0 0 1.25rem; }
+  .letter .block p { margin: 0; }
+  .mailmeta { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .4rem 1rem; margin: 0 0 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+  .mailmeta dt { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: .2rem; }
+  .mailmeta dd { margin: 0; overflow-wrap: anywhere; }
+  .checklist { margin: 1rem 0 0; padding-left: 1.2rem; max-width: 40rem; color: var(--muted); }
+
+  footer { margin-top: 3.5rem; }
+  footer p { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); margin: .75rem 0 0; }
+
+  @media (max-width: 40rem) {
+    .post, .facts, .stage { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
+    .post time { padding-top: 0; }
+    .facts dd { margin-bottom: .75rem; }
+    .hero { padding-top: 1.75rem; }
+    .mailmeta { grid-template-columns: minmax(0, 1fr); gap: .1rem; }
+    .mailmeta dd { margin-bottom: .6rem; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .nav a { transition: color .15s ease; }
+  }
+</style>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<div class="wrap">
+  <header>
+    <div class="masthead">
+      <a class="wordmark" href="#home">Road to End of 2026 Chapter (Semester 1)</a>
+      <span class="byline">by Kevin Segotso</span>
+    </div>
+    <div class="flag" role="presentation"></div>
+    <nav class="nav" aria-label="Main">
+      <a href="#home">Home</a>
+      <a href="#about">About Me</a>
+      <a href="#academic-life">Academic Life</a>
+      <a href="#reflections">Reflections</a>
+      <a href="#skills-projects">Skills and Projects</a>
+      <a href="#cv">CV</a>
+      <a href="#application-letter">Application Letter</a>
+      <a href="#email-template">Email Template</a>
+      <a href="#study-tips">Study Tips</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section class="view" data-view="home">
+      <div class="hero">
+        <p class="eyebrow">Year 1 · Computer Science and Engineering</p>
+        <h1>Learning to build software, one lecture at a time.</h1>
+        <p class="lead">I'm Kevin Segotso. I write down what I learn in networking, system development and JavaScript, so it makes sense to me first and maybe helps you too.</p>
+      </div>
+
+      <p class="section-label">Latest posts</p>
+
+      <article class="post">
+        <time datetime="2026-11-12">12 Nov 2026</time>
+        <div>
+          <h3>Finding a critical path in four steps</h3>
+          <p>A project network looks scary until you treat it as arithmetic. First, the forward pass: start at 0, add each task's duration, and when a task has several predecessors, take the largest finish time. Second, the backward pass: start from the project's finish time and subtract durations going back, taking the smallest start time when a task feeds several others. Third, slack is the latest finish minus the earliest finish. Fourth, any task with zero slack is critical, and a delay there delays the whole project.</p>
+          <p>A small example: task A (3 days) leads to B (4 days) and C (5 days), and both lead to D (2 days). The path A, C, D takes 10 days, and B has 1 day of slack.</p>
+          <div class="tags"><span class="tag">System Development</span><span class="tag">Scheduling</span></div>
+        </div>
+      </article>
+
+      <article class="post">
+        <time datetime="2026-11-11">11 Nov 2026</time>
+        <div>
+          <h3>Choosing a development model without guessing</h3>
+          <p>Waterfall, iterative, prototyping, spiral, V-model and Agile all cover the same phases: planning, requirements, design, coding, testing, deployment and maintenance. They differ in how easily you can change your mind along the way.</p>
+          <p>If requirements are clear and stable, Waterfall is simple and well documented. If the client keeps changing things, Agile's short sprints cope better. If risk is the main worry, Spiral reviews it in every loop. My exam rule is to name the model first, then give two or three reasons taken from the scenario.</p>
+          <div class="tags"><span class="tag">SDLC</span><span class="tag">Exam notes</span></div>
+        </div>
+      </article>
+
+      <article class="post">
+        <time datetime="2026-11-08">8 Nov 2026</time>
+        <div>
+          <h3>Learning JavaScript on a Redmi 12C</h3>
+          <p>I'm learning to code on my phone, using only free apps from the Play Store. Sololearn gives me the lessons and Acode is my editor. I started with Java and then switched to JavaScript as my main focus.</p>
+          <p>This is the first post in a series. I'll add what I practise as I go.</p>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">Phone coding</span></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ABOUT ME -->
+    <section class="view" data-view="about" hidden>
+      <h2 class="page-title">About Me</h2>
+      <p class="intro">I'm Kevin Segotso, a first-year Computer Science and Engineering student at Botswana Accounting College in Gaborone.</p>
+
+      <p class="section-label">Academic background</p>
+      <p class="measure">This semester I'm studying Fundamentals of Digital Systems, where we cover network fundamentals, and System Development, where we cover the software development life cycle, object modelling and algorithms. Outside lectures I'm teaching myself JavaScript on my phone.</p>
+
+      <p class="section-label">Where I'm heading</p>
+      <p class="measure">I want to start a technology business in Botswana. The plan is to import phones, screen protectors, accessories and computer parts at lower cost and sell them directly to customers. I also want to offer laptop upgrades, such as more RAM or storage, so people don't have to replace the whole laptop. To support that, I'm working towards learning to repair laptops and phones, and I want to become a well-known repair specialist.</p>
+
+      <p class="section-label">At a glance</p>
+      <dl class="facts">
+        <dt>Studying</dt><dd>Computer Science and Engineering, Year 1</dd>
+        <dt>Interests</dt><dd>Coding, networks, and hardware upgrades and repair</dd>
+        <dt>Learning</dt><dd>JavaScript, networking, system development</dd>
+        <dt>Building toward</dt><dd>A tech import, upgrade and repair business</dd>
+        <dt>Contact</dt><dd>katlokevin8@gmail.com</dd>
+      </dl>
+    </section>
+
+    <!-- ACADEMIC LIFE -->
+    <section class="view" data-view="academic-life" hidden>
+      <h2 class="page-title">Academic Life</h2>
+      <p class="intro">What I study, what each course expects of me, and how I keep my notes.</p>
+
+      <p class="section-label">Courses this semester</p>
+
+      <div class="course">
+        <h3>Fundamentals of Digital Systems (FDS)</h3>
+        <p>Network fundamentals, taught with Cisco-style lecture slides. I turn each lecture into short, accurate exam notes that still cover most of the content.</p>
+      </div>
+
+      <div class="course">
+        <h3>System Development (SD)</h3>
+        <p>The course is organised around five learning outcomes:</p>
+        <ol class="lo">
+          <li>A critical understanding of the software development process.</li>
+          <li>Solving problems with problem-solving techniques.</li>
+          <li>Modelling software with an object modelling technique.</li>
+          <li>Showing algorithm knowledge by implementing a simple transport management system.</li>
+          <li>Applying the SDLC in solution design for business problems.</li>
+        </ol>
+      </div>
+
+      <p class="section-label">Coursework so far</p>
+      <p class="measure">A campus transport case study took me through the whole life cycle: clarification questions and feasibility checks, a requirements specification, a request for proposal, use case and class diagrams, a flowchart with matching pseudocode, and a project schedule with a critical path.</p>
+
+      <p class="section-label">How I study</p>
+      <p class="measure">I write notes in exam style: short, accurate and structured around likely questions. When I finish a topic I try to explain it in my own words before moving on, then check what I missed.</p>
+    </section>
+
+    <!-- REFLECTIONS -->
+    <section class="view" data-view="reflections" hidden>
+      <h2 class="page-title">Reflections</h2>
+      <p class="intro">Two honest looks back at this semester: my own learning journey, and how my group worked together.</p>
+
+      <p class="section-label">Reflection 1: My learning journey so far</p>
+      <span class="tag wordcount">Target: 300 to 600 words</span>
+      <div class="stage">
+        <h3>Starting out</h3>
+        <div><p class="prompt">Write 3 to 4 sentences: what you expected from tertiary education, and what surprised you in the first weeks.</p></div>
+      </div>
+      <div class="stage">
+        <h3>Time and habits</h3>
+        <div><p class="prompt">Write 4 to 5 sentences on how you manage your time and study, and what has worked or failed (for example, short exam-style notes, explaining topics in your own words).</p></div>
+      </div>
+      <div class="stage">
+        <h3>Growth</h3>
+        <div><p class="prompt">Write 3 to 4 sentences on something that was hard (for example, learning JavaScript on a phone) and how you handled it. Show a growth mindset.</p></div>
+      </div>
+      <div class="stage">
+        <h3>Next steps</h3>
+        <div><p class="prompt">Write 2 to 3 sentences on what you will do differently next semester.</p></div>
+      </div>
+
+      <p class="section-label">Reflection 2: Group work and Tuckman's stages</p>
+      <span class="tag wordcount">Describe your own group, stage by stage</span>
+      <div class="stage">
+        <div><h3>Forming</h3></div>
+        <div>
+          <p class="def">The group meets, people are polite, and roles and goals are unclear.</p>
+          <p class="prompt">How was your group formed? Did you know your group mates beforehand? What was the first meeting like?</p>
+        </div>
+      </div>
+      <div class="stage">
+        <div><h3>Storming</h3></div>
+        <div>
+          <p class="def">Ideas and working styles clash, and disagreements appear about roles and workload.</p>
+          <p class="prompt">Were there disagreements or challenges? How did you resolve them?</p>
+        </div>
+      </div>
+      <div class="stage">
+        <div><h3>Norming</h3></div>
+        <div>
+          <p class="def">The group agrees on rules, roles and routines, and trust grows.</p>
+          <p class="prompt">How did the group develop shared expectations (meeting times, task split, communication channel)?</p>
+        </div>
+      </div>
+      <div class="stage">
+        <div><h3>Performing</h3></div>
+        <div>
+          <p class="def">The group works effectively, and members support each other to reach the goal.</p>
+          <p class="prompt">Did you reach this stage? Describe what it looked like in practice.</p>
+        </div>
+      </div>
+      <div class="stage">
+        <div><h3>Adjourning</h3></div>
+        <div>
+          <p class="def">The task ends and the group closes, ideally with reflection and closure.</p>
+          <p class="prompt">How did the group conclude? Was there closure, or unfinished tension?</p>
+        </div>
+      </div>
+      <div class="stage">
+        <div><h3>What I learned</h3></div>
+        <div><p class="prompt">What did you learn about group communication and teamwork? Give at least one specific example.</p></div>
+      </div>
+    </section>
+
+    <!-- SKILLS AND PROJECTS -->
+    <section class="view" data-view="skills-projects" hidden>
+      <h2 class="page-title">Skills and Projects</h2>
+      <p class="intro">Three skills I'm building, with the work that shows them, followed by other strengths and goals.</p>
+
+      <p class="section-label">Featured skills</p>
+      <div class="skill">
+        <h3>Systems analysis and design</h3><span class="chip">Practised</span>
+        <p>I applied the full SDLC to a campus transport case study: feasibility evaluation, requirements specification, request for proposal, use case and class diagrams, a flowchart and matching pseudocode.</p>
+        <p class="prompt">Add a screenshot of one of your diagrams, or a link to it, here.</p>
+      </div>
+      <div class="skill">
+        <h3>Project scheduling</h3><span class="chip">Practised</span>
+        <p>I can calculate earliest and latest finish times, find slack, identify the critical path and draw the network diagram. My post "Finding a critical path in four steps" explains the method.</p>
+        <p class="prompt">Add a screenshot of your network diagram here.</p>
+      </div>
+      <div class="skill">
+        <h3>JavaScript</h3><span class="chip live">Studying</span>
+        <p>I'm learning on my phone with Sololearn lessons and practising in the Acode editor.</p>
+        <p class="prompt">Add a screenshot of a small program you wrote, or a short description of it.</p>
+      </div>
+
+      <p class="section-label">Other strengths and goals</p>
+      <div class="skill"><h3>Network fundamentals</h3><span class="chip live">Studying</span><p>Core concepts from my Fundamentals of Digital Systems lectures.</p></div>
+      <div class="skill"><h3>Exam-style note making</h3><span class="chip">Practised</span><p>Cutting a lecture down to short notes without losing the key content.</p></div>
+      <div class="skill"><h3>Sourcing and selling tech products</h3><span class="chip live">Planning</span><p>Phones, accessories and computer parts, imported at lower cost and sold directly.</p></div>
+      <div class="skill"><h3>Laptop upgrades and repair</h3><span class="chip live">Learning goal</span><p>RAM and storage upgrades first, then wider laptop and phone repair.</p></div>
+    </section>
+
+    <!-- CV -->
+    <section class="view" data-view="cv" hidden>
+      <h2 class="page-title">CV</h2>
+      <div class="doc-tools">
+        <button type="button" class="copy" data-target="cv-doc">Copy CV as text</button>
+        <span class="copy-msg" role="status" aria-live="polite"></span>
+      </div>
+
+      <div class="sheet" id="cv-doc">
+        <h2>Kevin Segotso</h2>
+        <p class="contact">
+          <span>katlokevin8@gmail.com</span>
+          <span>+267 78 206 185</span>
+          <span>Gaborone, Botswana</span>
+        </p>
+
+        <h3>Profile</h3>
+        <p>First-year Computer Science and Engineering student with coursework in software development, object modelling and networking. Teaching myself JavaScript and planning a technology import, upgrade and repair business.</p>
+
+        <h3>Education</h3>
+        <div class="entry">
+          <div class="head"><span>Computer Science and Engineering, Year 1</span><span>2026 to present</span></div>
+          <p>Botswana Accounting College, Gaborone</p>
+          <p>Courses: Fundamentals of Digital Systems (network fundamentals), System Development (SDLC, object modelling, algorithms).</p>
+        </div>
+
+        <h3>Skills</h3>
+        <ul>
+          <li>Programming: JavaScript (learning)</li>
+          <li>Networking: network fundamentals (studying)</li>
+          <li>Analysis and design: SDLC models, requirements specification, use case and class diagrams</li>
+          <li>Process and planning: flowcharts, pseudocode, critical path scheduling, network diagrams</li>
+        </ul>
+
+        <h3>Projects</h3>
+        <div class="entry">
+          <div class="head"><span>Campus transport management system</span><span>Coursework, 2026</span></div>
+          <p>Applied the full SDLC to a college transport case study: feasibility evaluation, requirements specification, request for proposal, UML diagrams, flowchart and pseudocode, and project schedule.</p>
+        </div>
+        <div class="entry">
+          <div class="head"><span>Tech import, upgrade and repair business</span><span>Planning</span></div>
+          <p>Plan to import and resell phones, accessories and computer parts, and to offer laptop upgrades such as RAM and storage.</p>
+        </div>
+
+        <h3>Experience</h3>
+        <p><span class="fill">Add work, volunteering or part-time experience here</span></p>
+
+        <h3>Certifications</h3>
+        <p><span class="fill">Add any certificates here, for example course certificates</span></p>
+
+        <h3>References</h3>
+        <p>Available on request.</p>
+      </div>
+    </section>
+
+    <!-- APPLICATION LETTER -->
+    <section class="view" data-view="application-letter" hidden>
+      <h2 class="page-title">Application Letter</h2>
+      <p class="intro">A formal template for applying for industrial attachment. Replace the highlighted parts for each company.</p>
+      <div class="doc-tools">
+        <button type="button" class="copy" data-target="letter-doc">Copy letter as text</button>
+        <span class="copy-msg" role="status" aria-live="polite"></span>
+      </div>
+
+      <div class="sheet letter" id="letter-doc">
+        <div class="block">
+          <p>Kevin Segotso</p>
+          <p>Botswana Accounting College</p>
+          <p>Gaborone, Botswana</p>
+          <p>katlokevin8@gmail.com</p>
+          <p>+267 78 206 185</p>
+        </div>
+        <div class="block"><p><span class="fill">Date</span></p></div>
+        <div class="block">
+          <p>The Human Resources Manager</p>
+          <p><span class="fill">Company name</span></p>
+          <p><span class="fill">Company address</span></p>
+        </div>
+        <p>Dear Sir or Madam,</p>
+        <p><strong>Application for Industrial Attachment: Computer Science and Engineering</strong></p>
+        <p>I am a first-year Computer Science and Engineering student at Botswana Accounting College, and I am writing to apply for industrial attachment at <span class="fill">Company name</span> from <span class="fill">start date</span> to <span class="fill">end date</span>.</p>
+        <p>My coursework has covered network fundamentals, the software development life cycle, object modelling with UML, flowcharts and pseudocode, and project scheduling. I am also teaching myself JavaScript in my own time. I take pride in writing clear, accurate notes and in explaining what I have learned in my own words.</p>
+        <p>I would like to apply this knowledge in a workplace, learn from experienced staff, and contribute to the work of your <span class="fill">department or team</span>. I am hardworking, willing to learn, and ready to follow instructions and workplace procedures.</p>
+        <p>I have attached my CV for your consideration. I would welcome the chance to discuss my application at an interview, and I can be reached on +267 78 206 185 or at katlokevin8@gmail.com.</p>
+        <p>Thank you for your time and consideration.</p>
+        <p>Yours faithfully,</p>
+        <p>Kevin Segotso</p>
+      </div>
+    </section>
+
+    <!-- EMAIL TEMPLATE -->
+    <section class="view" data-view="email-template" hidden>
+      <h2 class="page-title">Email Template</h2>
+      <p class="intro">A short, professional email to send with my CV and application letter.</p>
+      <div class="doc-tools">
+        <button type="button" class="copy" data-target="mail-doc">Copy email as text</button>
+        <span class="copy-msg" role="status" aria-live="polite"></span>
+      </div>
+
+      <div class="sheet mail" id="mail-doc">
+        <dl class="mailmeta">
+          <dt>To</dt><dd><span class="fill">recipient email address</span></dd>
+          <dt>Subject</dt><dd>Application for Industrial Attachment - Kevin Segotso, Computer Science and Engineering</dd>
+          <dt>Attachments</dt><dd>Kevin_Segotso_CV.pdf, Kevin_Segotso_Application_Letter.pdf</dd>
+        </dl>
+        <p>Dear <span class="fill">Mr/Ms Surname</span>,</p>
+        <p>I hope you are well. My name is Kevin Segotso, and I am a first-year Computer Science and Engineering student at Botswana Accounting College.</p>
+        <p>I am applying for industrial attachment at <span class="fill">Company name</span> from <span class="fill">start date</span> to <span class="fill">end date</span>. Please find my application letter and CV attached.</p>
+        <p>I would be glad to discuss my application at a time that suits you. Thank you for your time and consideration.</p>
+        <p>Kind regards,</p>
+        <p>Kevin Segotso<br>+267 78 206 185<br>katlokevin8@gmail.com</p>
+      </div>
+
+      <ul class="checklist">
+        <li>Use a clear subject line that names the position and your name.</li>
+        <li>Keep the email short and address a named person where you can.</li>
+        <li>Attach both files, name them clearly, and check the attachments before sending.</li>
+      </ul>
+    </section>
+
+    <!-- STUDY TIPS (optional page) -->
+    <section class="view" data-view="study-tips" hidden>
+      <h2 class="page-title">Study Tips</h2>
+      <p class="intro">Strategies I use, and the free tools that go with them.</p>
+
+      <p class="section-label">Strategies</p>
+      <div class="course">
+        <h3>Write exam-style notes</h3>
+        <p>After each lecture I cut the slides down to short, accurate notes that still cover most of the content, organised around likely exam questions.</p>
+      </div>
+      <div class="course">
+        <h3>Explain it in your own words</h3>
+        <p>I close my notes and explain the topic as if teaching a friend, then check what I missed. If I can't explain it, I haven't learned it yet.</p>
+      </div>
+      <div class="course">
+        <h3>Practise with small tasks</h3>
+        <p>For subjects like JavaScript and project scheduling, I work small examples by hand before moving on to bigger ones.</p>
+      </div>
+
+      <p class="section-label">Free resources</p>
+      <div class="course">
+        <h3><a href="https://www.sololearn.com" target="_blank" rel="noopener">Sololearn</a></h3>
+        <p>Short coding lessons that work well on a phone.</p>
+      </div>
+      <div class="course">
+        <h3><a href="https://acode.app" target="_blank" rel="noopener">Acode</a></h3>
+        <p>A free code editor for Android, which I use to practise on my phone.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="flag" role="presentation"></div>
+    <p>© 2026 Kevin Segotso</p>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var views = Array.prototype.slice.call(document.querySelectorAll('.view'));
+    var ids = views.map(function (v) { return v.getAttribute('data-view'); });
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+    var first = true;
+
+    function show() {
+      var h = (location.hash || '').replace('#', '');
+      if (ids.indexOf(h) === -1) { h = 'home'; }
+      views.forEach(function (v) { v.hidden = v.getAttribute('data-view') !== h; });
+      links.forEach(function (a) {
+        if (a.getAttribute('href') === '#' + h) { a.setAttribute('aria-current', 'page'); }
+        else { a.removeAttribute('aria-current'); }
+      });
+      if (!first) { window.scrollTo(0, 0); }
+      first = false;
+    }
+    window.addEventListener('hashchange', show);
+    show();
+
+    Array.prototype.slice.call(document.querySelectorAll('button.copy')).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = document.getElementById(btn.getAttribute('data-target'));
+        var msg = btn.parentNode.querySelector('.copy-msg');
+        function fallback() {
+          var r = document.createRange();
+          r.selectNodeContents(target);
+          var s = window.getSelection();
+          s.removeAllRanges();
+          s.addRange(r);
+          msg.textContent = 'Text selected. Press and hold, then choose Copy.';
+        }
+        try {
+          navigator.clipboard.writeText(target.innerText).then(function () {
+            msg.textContent = 'Copied as text.';
+          }, fallback);
+        } catch (e) { fallback(); }
+      });
+    });
+  })();
+</script>
